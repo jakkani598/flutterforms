@@ -193,25 +193,25 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             child: Column(
               children: const <Widget>[
                 TextField(
-                  decoration: InputDecoration(hintText: 'DFL/Month',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'DFL/Month',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Batches/Month',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'Batches/Month',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Average size of batch',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'Average size of batch',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'No. of labour',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'No. of labour',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Name Of Egg Grainage',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'Name Of Egg Grainage',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Your Secondary Phone Number',hintStyle: TextStyle(color: Colors.green)),
+                  decoration: InputDecoration(hintText: 'Your Secondary Phone Number',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),),
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Farm Area (acres)',hintStyle: TextStyle(color: Colors.green))
+                  decoration: InputDecoration(hintText: 'Farm Area (acres)',hintStyle: TextStyle(color: Colors.green),contentPadding: EdgeInsets.all(10.0),)
                 )
 
               ],
