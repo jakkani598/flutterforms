@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterforms/manageprofile/profiledetailsmain.dart';
 import 'package:flutterforms/manageprofile/profileprimarydetails.dart';
+import 'package:flutterforms/reeler_data/reelerprofileedit.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: const ProfileDatailsMain(),
+        body: const ReelerProfileEdit(),
       ),
     );
   }

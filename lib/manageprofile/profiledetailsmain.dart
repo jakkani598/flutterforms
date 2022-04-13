@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterforms/manageprofile/profileprimarydetails.dart';
 
 class ProfileDatailsMain extends StatefulWidget {
-  const ProfileDatailsMain({Key? key}) : super(key: key);
 
   @override
   State<ProfileDatailsMain> createState() => _ProfileDatailsMainState();
