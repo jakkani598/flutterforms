@@ -1,10 +1,10 @@
 
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutterforms/reeler_data/reelerkycdetails.dart';
+import 'package:flutterforms/reeler_data/reelerpaymentdetails.dart';
 import 'package:flutterforms/reeler_data/reelerprofilemainform.dart';
+
+import 'addressdetails.dart';
 
 class ReelerProfileEdit extends StatefulWidget
 {
@@ -35,7 +35,7 @@ class ReelerProfileEditState extends State<ReelerProfileEdit>
                         TextButton(
                           child: const Text('EDIT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue)),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReelerProfileMainForm()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ReelerProfileMainForm()));
                           },
                         ),
                         const SizedBox(width: 8),
@@ -95,10 +95,22 @@ class ReelerProfileEditState extends State<ReelerProfileEdit>
                             child: Text("Address",textAlign: TextAlign.left,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                           ),
                         ),
-                        const Expanded(
-                          child: Text("EDIT",textAlign: TextAlign.end,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue)),
-                        ),
-                      ],
+                         Expanded(
+                          child: Container(
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddressDetailsForm()));
+                              },
+                                child: const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("EDIT",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: 15)),
+                                )
+                            ),
+                          )),
+                ],
                     )
                 )
             )
@@ -127,8 +139,19 @@ class ReelerProfileEditState extends State<ReelerProfileEdit>
                             child: Text("Bank Account",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black  )),
                           ),
                         ),
-                        const Expanded(
-                          child: Text("EDIT",textAlign: TextAlign.end,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue)),
+                        Expanded(
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReelerpaymentDetailsForm()));
+                              },
+                              child: const Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("EDIT",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: 15)),
+                              )
+                            )
                         ),
                       ],
                     )
@@ -159,8 +182,19 @@ class ReelerProfileEditState extends State<ReelerProfileEdit>
                             child: Text("Update KYC",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black  )),
                           ),
                         ),
-                        const Expanded(
-                          child: Text("UPDATE",textAlign: TextAlign.end,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue)),
+                        Expanded(
+                            child: TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle: const TextStyle(fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReelerKYCDetailsForm()));
+                                },
+                                child: const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("UPDATE",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: 15)),
+                                )
+                            )
                         ),
                       ],
                     )

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
+import 'package:intl/intl.dart';
 
 import '../radiotheme/myradiolisttile.dart';
 
 class ReelerProfileMainForm extends StatefulWidget {
   const ReelerProfileMainForm({Key? key}) : super(key: key);
+
   @override
   State<ReelerProfileMainForm> createState() => ReelerProfileMainFormState();
 }
 
 class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
   int _value = 0;
+  var dobCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,24 +24,27 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: ElevatedButton(
-                onPressed: () =>
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('AlertDialog Title'),
-                        content: const Text('AlertDialog description'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),
-                        ],
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: Row(children: const [
+                      Image(
+                        image: AssetImage('assets/images/correct.png'),
+                        width: 30,
+                        height: 30,
                       ),
-                    ),
+                      Padding(padding: EdgeInsets.all(5.0)),
+                      Text('ReshaMandi')
+                    ]),
+                    content: const Text('Profile updated successfully'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                ),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.green),
                 ),
@@ -50,8 +57,7 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
             ),
           ],
         ),
-        body: Container(
-            child: ListView(children: <Widget>[
+        body: ListView(children: <Widget>[
           Card(
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
             child: Padding(
@@ -81,7 +87,7 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                    child: Text(
+                                    child: const Text(
                                   "Your Selfie",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -176,50 +182,63 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
             ),
           ),
           Container(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      dobCtrl.text,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )),
+                    Expanded(
+                        child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _selectDate(context);
+                        },
+                        child: const Text('Pick Date'),
+                      ),
+                    ))
+                  ],
+                ),
+              )),
+          Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: '04-04-2022',
+                labelText: 'Your Secondary Phone Number',
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.done,
                     color: Colors.green,
                   ),
-                  onPressed: () {
-                    _selectDate(context);
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),
           ),
-        Container(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: TextField(
-          obscureText: true,
-            decoration: InputDecoration(
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                  labelText: 'Your Secondary Phone Number',
-                    suffixIcon: IconButton(
-                    icon: const Icon(Icons.done, color: Colors.green,), onPressed: () {  },
-                    ),
-                    ),
-                    ),
-          ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Yarn Capacity',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.done, color: Colors.green,), onPressed: () {  },
-                    ),
+                labelText: 'Yarn Capacity',
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.done,
+                    color: Colors.green,
                   ),
+                  onPressed: () {},
                 ),
               ),
+            ),
+          ),
           const Padding(
               padding: EdgeInsets.only(left: 15, top: 5, bottom: 5, right: 15)),
           Container(
@@ -234,55 +253,54 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
               padding: EdgeInsets.only(left: 15, top: 5, bottom: 5, right: 15)),
           Container(
               child: Row(
-                children: [
-                  MyRadioListTile<int>(
-                    value: 1,
-                    groupValue: _value,
-                    leading: 'Yes',
-                    onChanged: (value) => setState(() => _value = value!),
-                  ),
-                  MyRadioListTile<int>(
-                    value: 0,
-                    groupValue: _value,
-                    leading: 'No',
-                    onChanged: (value) => setState(() => _value = value!),
-                  ),
-                ],
-              )
-          ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom: 30.0,top: 15.0),
-              child: SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Text("SAVE CHANGES"),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.lightGreen,
-                      textStyle: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.bold)),
-                ),
+            children: [
+              MyRadioListTile<int>(
+                value: 1,
+                groupValue: _value,
+                leading: 'Yes',
+                onChanged: (value) => setState(() => _value = value!),
               ),
-            )
-        ])));
+              MyRadioListTile<int>(
+                value: 0,
+                groupValue: _value,
+                leading: 'No',
+                onChanged: (value) => setState(() => _value = value!),
+              ),
+            ],
+          )),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 8.0, right: 8.0, bottom: 30.0, top: 15.0),
+            child: SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text("SAVE CHANGES"),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.lightGreen,
+                    textStyle: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          )
+        ]));
   }
-  DateTime selectedDate = DateTime.now();
   _selectDate(BuildContext context) async {
-    final DateTime? selected = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2010),
-      lastDate: DateTime(2025),
+    var datePicked = await DatePicker.showSimpleDatePicker(
+      context,
+      initialDate: DateTime(1994),
+      firstDate: DateTime(1960),
+      lastDate: DateTime(2012),
+      dateFormat: "dd-MM-yyyy",
+      locale: DateTimePickerLocale.en_us,
+      looping: true,
     );
-    if (selected != null && selected != selectedDate) {
-      setState(() {
-        selectedDate = selected;
-      });
-    }
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String formatted = formatter.format(datePicked!);
+    dobCtrl.text = formatted;
+
   }
-
 }
-
