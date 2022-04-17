@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/date_picker.dart';
 import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:intl/intl.dart';
 
+import '../button_widget.dart';
 import '../radiotheme/myradiolisttile.dart';
+import '../utils/utils.dart';
 
 class ReelerProfileMainForm extends StatefulWidget {
   const ReelerProfileMainForm({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class ReelerProfileMainForm extends StatefulWidget {
 class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
   int _value = 0;
   String _dateValue = "";
+  DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,19 +192,28 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: Text(_dateValue ?? 'Please Select Date',
+                        child: Text(_dateValue==""?"Select Date":_dateValue,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     )),
-                    Expanded(
-                        child: SizedBox(
+                    SizedBox(
                       height: 50,
-                      child: ElevatedButton(
+                      child: Expanded(child: ElevatedButton(
                         onPressed: () {
-                          _selectDate(context);
+                          Utils.showSheet(
+                            context,
+                            child: buildDatePicker(),
+                            onClicked: () {
+                              final value = DateFormat('dd-MM-yyyy').format(dateTime);
+                              setState(() {
+                                _dateValue = value;
+                              });
+                              Navigator.pop(context);
+                            },
+                          );
                         },
-                        child: const Text('Pick Date'),
-                      ),
-                    ))
+                        child: Text("Show Date Picker"),
+                      )),
+                    )
                   ],
                 ),
               )),
@@ -303,4 +316,16 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
       _dateValue = formatted;
     });
   }
+
+  Widget buildDatePicker() => SizedBox(
+    height: 180,
+    child: CupertinoDatePicker(
+      minimumYear: 2015,
+      maximumYear: DateTime.now().year,
+      initialDateTime: dateTime,
+      mode: CupertinoDatePickerMode.date,
+      onDateTimeChanged: (dateTime) =>
+          setState(() => this.dateTime = dateTime),
+    ),
+  );
 }

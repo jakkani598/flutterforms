@@ -1,8 +1,10 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../radiotheme/myradiolisttile.dart';
+import '../utils/utils.dart';
 
 class AddressDetailsForm extends StatefulWidget {
   const AddressDetailsForm({Key? key}) : super(key: key);
@@ -12,8 +14,28 @@ class AddressDetailsForm extends StatefulWidget {
 }
 
 class AddressDetailsFormState extends State<AddressDetailsForm> {
-  int _value = 0;
+  int index = 0;
+  final _selectStateController = TextEditingController();
+  final _selectCityController = TextEditingController();
+  static List<String> stateValues = [
+    'Maharastra',
+    'Karnataka',
+    'Telanagana',
+    'Tamilanadu',
+    'Andrapradesh',
+    'Kerala',
+    'Punjab',
+    'Madhyapradesh'
+  ];
 
+  static List<String> cityValues = [
+    'City1',
+    'City2',
+    'City3',
+    'City4',
+    'City5',
+    'City6'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,16 +59,27 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
           Container(
             padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
             child: TextField(
-              obscureText: true,
+              obscureText: false,
+              controller: _selectStateController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'SELECT STATE',
                 suffixIcon: IconButton(
                   icon: const Icon(
-                    Icons.done,
+                    Icons.arrow_downward_rounded,
                     color: Colors.green,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Utils.showSheet(
+                      context,
+                      child: buildCustomPicker(stateValues),
+                      onClicked: () {
+                        final value = stateValues[index];
+                        _selectStateController.text = value;
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
                 ),
               ),
             ),
@@ -55,15 +88,26 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: TextField(
               obscureText: true,
+              controller: _selectCityController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'SELECT CITY',
                 suffixIcon: IconButton(
                   icon: const Icon(
-                    Icons.done,
+                    Icons.arrow_downward,
                     color: Colors.green,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Utils.showSheet(
+                      context,
+                      child: buildCustomPicker(cityValues),
+                      onClicked: () {
+                        final value = cityValues[index];
+                        _selectCityController.text = value;
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
                 ),
               ),
             ),
@@ -171,4 +215,31 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
   String formateDate(DateTime date) {
     return DateFormat("dd-MM-yyyy").format(date);
   }
+  Widget buildCustomPicker(List<String> data) => SizedBox(
+    height: 300,
+    child: CupertinoPicker(
+      itemExtent: 64,
+      diameterRatio: 0.7,
+      looping: true,
+      onSelectedItemChanged: (index) => setState(() => this.index = index),
+      // selectionOverlay: Container(),
+      selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
+        background: Colors.pink.withOpacity(0.12),
+      ),
+      children: Utils.modelBuilder<String>(
+        data,
+            (index, value) {
+          final isSelected = this.index == index;
+          final color = isSelected ? Colors.pink : Colors.black;
+
+          return Center(
+            child: Text(
+              value,
+              style: TextStyle(color: color, fontSize: 24),
+            ),
+          );
+        },
+      ),
+    ),
+  );
 }
