@@ -14,7 +14,7 @@ class ReelerProfileMainForm extends StatefulWidget {
 
 class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
   int _value = 0;
-  var dobCtrl = TextEditingController();
+  String _dateValue = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,8 +188,7 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: Text(
-                      dobCtrl.text,
+                        child: Text(_dateValue ?? 'Please Select Date',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     )),
                     Expanded(
@@ -289,7 +288,7 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
         ]));
   }
   _selectDate(BuildContext context) async {
-    var datePicked = await DatePicker.showSimpleDatePicker(
+      DateTime? datePicked= await DatePicker.showSimpleDatePicker(
       context,
       initialDate: DateTime(1994),
       firstDate: DateTime(1960),
@@ -300,7 +299,8 @@ class ReelerProfileMainFormState extends State<ReelerProfileMainForm> {
     );
     final DateFormat formatter = DateFormat('dd-MM-yyyy');
     final String formatted = formatter.format(datePicked!);
-    dobCtrl.text = formatted;
-
+    setState(() {
+      _dateValue = formatted;
+    });
   }
 }
