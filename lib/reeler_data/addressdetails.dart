@@ -17,6 +17,7 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
   int index = 0;
   final _selectStateController = TextEditingController();
   final _selectCityController = TextEditingController();
+  final _pincodeController = TextEditingController();
   static List<String> stateValues = [
     'Maharastra',
     'Karnataka',
@@ -36,6 +37,15 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
     'City5',
     'City6'
   ];
+
+  static List<String> pincodeValues = [
+    '4000123',
+    '4000124',
+    '4000125',
+    '4000126',
+    '4000127',
+    '4000128'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +56,6 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
           const Padding(
               padding: EdgeInsets.only(left: 15, top: 2, bottom: 2, right: 15)),
           Container(
-            padding:
-            const EdgeInsets.only(left: 15, top: 15, bottom: 5, right: 15),
-            child: const Text(
-              "SELECT STATE",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-            ),
-          ),
-          Container(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           ),
           Container(
@@ -61,6 +63,7 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
             child: TextField(
               obscureText: false,
               controller: _selectStateController,
+              enableInteractiveSelection: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'SELECT STATE',
@@ -87,7 +90,8 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
           Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: TextField(
-              obscureText: true,
+              obscureText: false,
+              enableInteractiveSelection: false,
               controller: _selectCityController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -123,16 +127,19 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
                   children: [
                     Expanded(
                         child: TextField(
-                          obscureText: true,
+                          obscureText: false,
+                          controller: _pincodeController,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             labelText: 'PIN CODE',
                             suffixIcon: IconButton(
                               icon: const Icon(
                                 Icons.done,
                                 color: Colors.green,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+
+                              },
                             ),
                           ),
                         ),
@@ -144,7 +151,15 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
                             height: 50,
                             child: ElevatedButton(
                               onPressed: () {
-                                _selectDate(context);
+                                Utils.showSheet(
+                                  context,
+                                  child: buildCustomPicker(pincodeValues),
+                                  onClicked: () {
+                                    final value = pincodeValues[index];
+                                    _pincodeController.text = value;
+                                    Navigator.pop(context);
+                                  },
+                                );
                               },
                               child: Text('SELECT'),
                             ),
@@ -157,12 +172,14 @@ class AddressDetailsFormState extends State<AddressDetailsForm> {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: SizedBox(
               child: TextField(
-                obscureText: true,
+                obscureText: false,
+                maxLines: 5,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(vertical: 40.0,horizontal: 20.0),
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'ENTER ADDRESS',
                   helperMaxLines: 10,
+                  hintMaxLines: 5,
                   suffixIcon: IconButton(
                     icon: const Icon(
                       Icons.done,
